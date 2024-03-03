@@ -1,6 +1,10 @@
 use plotters::prelude::*;
 use rand::prelude::*;
 use std::{fs::create_dir, path::Path, time::Instant};
+
+mod algorithms;
+use algorithms::*;
+
 fn main() -> anyhow::Result<()> {
     println!("Welcome!");
     let path = Path::new("./out");
@@ -10,7 +14,7 @@ fn main() -> anyhow::Result<()> {
     }
     println!("Measuring and graphing algorithms...");
     let algorithms = [insertion_sort, selection_sort];
-    let names = ["insertion_sort", "selection_sort"];
+    let names = ["insertion_sort", "selection_sort", "merge_sort"];
     for (index, algorithm) in algorithms.iter().enumerate() {
         graph(
             algorithm,
@@ -79,44 +83,4 @@ where
     println!(" - graphing completed.");
     println!("Successfully measured data and created a graph!");
     Ok(())
-}
-fn insertion_sort(array: &mut [i32]) {
-    for i in 1..array.len() {
-        let mut j = i;
-        while j > 0 && array[j] < array[j - 1] {
-            array.swap(j, j - 1);
-            j -= 1;
-        }
-    }
-}
-fn selection_sort(array: &mut [i32]) {
-    for index in 0..array.len() - 1 {
-        let mut minimum_index = index;
-        for j in index + 1..array.len() {
-            if array[j] < array[minimum_index] {
-                minimum_index = j;
-            }
-        }
-        if minimum_index != index {
-            array.swap(minimum_index, index);
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::{insertion_sort, selection_sort};
-
-    #[test]
-    fn test_insertion_sort() {
-        let mut v = vec![5, 3, 4, 1, 2];
-        insertion_sort(&mut v);
-        assert_eq!(v, vec![1, 2, 3, 4, 5]);
-    }
-    #[test]
-    fn test_selection_sort() {
-        let mut v = vec![5, 3, 4, 1, 2];
-        selection_sort(&mut v);
-        assert_eq!(v, vec![1, 2, 3, 4, 5]);
-    }
 }
