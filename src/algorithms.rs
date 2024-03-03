@@ -20,6 +20,7 @@ pub fn selection_sort(array: &mut [i32]) {
         }
     }
 }
+// https://mohitkarekar.com/posts/2020/merge-sort-in-rust/
 
 fn merge(left: &[i32], right: &[i32]) -> Vec<i32> {
     let mut i = 0;
